@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+}
+
+#container {
+    text-align: center;
+}
+
+#bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 300px;
+    margin-bottom: 30px;
+}
+
+.bar {
+    width: 20px;
+    margin: 0 5px;
+    background-color: #2c84a2;
+    height: 150px; /* 초기 높이 */
+    width: 80%;
+    transition: height 0.1s ease; /* 부드러운 변화를 위한 트랜지션 */
+}
+
+#time {
+    font-size: 5rem;
+    margin-bottom: 30px;
+}
+
+#decibel {
+    font-size: 15rem;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center; /* 가운데 정렬 */
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+}
+
+#dbValue {
+    display: inline-block;
+    width: 200px; /* 숫자의 폭을 고정 */
+    text-align: right; /* 숫자가 오른쪽 정렬되도록 설정 */
+    margin-right: 70px; /* 숫자와 'dB' 텍스트 사이에 간격 추가 */
+}
+
+#warning {
+    font-size: 20rem;
+    color: red;
+    font-weight: bold;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    display: none;
+}

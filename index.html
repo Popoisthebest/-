@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교실 데시벨 감지</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="bars">
+            <div class="bar" id="bar1"></div>
+            <div class="bar" id="bar2"></div>
+            <div class="bar" id="bar3"></div>
+            <div class="bar" id="bar4"></div>
+            <div class="bar" id="bar5"></div>
+            <div class="bar" id="bar6"></div>
+            <div class="bar" id="bar7"></div>
+            <div class="bar" id="bar8"></div>
+        </div>
+        <div id="decibel"><span id="dbValue"></span>dB</div>
+        <div id="time"></div>
+        <div id="warning" style="display: none;">경고</div>
+        <div id="averageDecibel">평균 dB: <span id="avgDbValue">0</span>dB</div>
+        <div id="warningCount">경고 횟수: 0</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <script src="script.js"></script>
+</body>
+</html>
