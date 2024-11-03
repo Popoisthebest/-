@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const avgDbValue = Math.round(cumulativeDbSum / dbCount);
                 avgDbValueElement.innerText = avgDbValue;
 
-                if (dbValue > 70) {
+                if (dbValue > 40) {
                     if (warningElement.style.display === 'none') {
                         warningCount++;
                         document.getElementById('warningCount').innerText = `경고 횟수: ${warningCount}`;
