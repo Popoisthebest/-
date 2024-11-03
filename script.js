@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let cumulativeDbSum = 0;
     let dbCount = 0;
 
+    // Load the warning sound
+    const warningSound = new Audio('path/to/warning-sound.mp3'); // Replace with actual path
+
     function updateTime() {
         timeElement.innerText = moment().format('LTS');
     }
@@ -46,10 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (warningElement.style.display === 'none') {
                         warningCount++;
                         document.getElementById('warningCount').innerText = `경고 횟수: ${warningCount}`;
+                        warningSound.play(); // Play warning sound
                     }
                     warningElement.style.display = 'block';
                 } else {
                     warningElement.style.display = 'none';
+                    warningSound.pause(); // Stop the sound when decibel level goes below threshold
+                    warningSound.currentTime = 0; // Reset sound to start
                 }
 
                 const barHeight = Math.min(300, (dbValue / 120) * 300);
