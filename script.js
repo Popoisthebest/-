@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let dbCount = 0;
 
     // Load the warning sound
-    const warningSound = new Audio('path/to/warning-sound.mp3'); // Replace with actual path
+    const warningSound = new Audio('경고음.mp3'); // Replace with actual path
 
     function updateTime() {
         timeElement.innerText = moment().format('LTS');
