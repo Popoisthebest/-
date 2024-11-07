@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const avgDbValueElement = document.getElementById('avgDbValue');
     const warningElement = document.getElementById('warning');
     const timeElement = document.getElementById('time');
-    const startButton = document.getElementById('startButton');
-    const stopButton = document.getElementById('stopButton');
+    const recordButton = document.getElementById('recordButton');
+    const recordingIndicator = document.getElementById('recordingIndicator');
 
     const bars = document.querySelectorAll('.bar');
     let warningCount = 0;
@@ -80,37 +80,48 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('마이크 접근 실패:', err);
         });
 
-    // 기록 시작 버튼 이벤트
-    startButton.addEventListener("click", function () {
-        isRecording = true;
-        startTime = moment();
-        cumulativeDbSum = 0;
-        dbCount = 0;
-        warningCount = 0;
-    });
+    // 기록 버튼 이벤트 (시작/종료 전환)
+    recordButton.addEventListener("click", function () {
+        if (isRecording) {
+            // 기록 종료
+            isRecording = false;
+            endTime = moment();
+            const avgDbValue = Math.round(cumulativeDbSum / dbCount);
 
-    // 기록 종료 버튼 이벤트
-    stopButton.addEventListener("click", function () {
-        if (!isRecording) return;
+            // 측정 결과를 CSV 데이터 배열에 추가
+            csvData.push([
+                startTime.format(),
+                endTime.format(),
+                avgDbValue,
+                warningCount
+            ]);
 
-        isRecording = false;
-        endTime = moment();
-        const avgDbValue = Math.round(cumulativeDbSum / dbCount);
+            // 다음 기록을 위해 초기화
+            cumulativeDbSum = 0;
+            dbCount = 0;
+            warningCount = 0;
+            avgDbValueElement.innerText = "0";  // 평균 데시벨 표시 초기화
+            document.getElementById('warningCount').innerText = "경고 횟수: 0";  // 경고 횟수 표시 초기화
 
-        // 측정 결과를 CSV 데이터 배열에 추가
-        csvData.push([
-            startTime.format(),
-            endTime.format(),
-            avgDbValue,
-            warningCount
-        ]);
+            // 버튼 및 아이콘 표시 업데이트
+            recordButton.innerText = "기록 시작";
+            recordButton.classList.remove("stop");
+            recordButton.classList.add("start");
+            recordingIndicator.classList.add("hidden");
+        } else {
+            // 기록 시작
+            isRecording = true;
+            startTime = moment();
+            cumulativeDbSum = 0;
+            dbCount = 0;
+            warningCount = 0;
 
-        // 다음 기록을 위해 초기화
-        cumulativeDbSum = 0;
-        dbCount = 0;
-        warningCount = 0;
-        avgDbValueElement.innerText = "0";  // 평균 데시벨 표시 초기화
-        document.getElementById('warningCount').innerText = "경고 횟수: 0";  // 경고 횟수 표시 초기화
+            // 버튼 및 아이콘 표시 업데이트
+            recordButton.innerText = "기록 종료";
+            recordButton.classList.remove("start");
+            recordButton.classList.add("stop");
+            recordingIndicator.classList.remove("hidden");
+        }
     });
 
     // CSV 파일 생성 및 다운로드 함수
