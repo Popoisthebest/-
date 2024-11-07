@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const dbValueElement = document.getElementById('dbValue');
     const avgDbValueElement = document.getElementById('avgDbValue');
+    const maxDbValueElement = document.getElementById('maxDbValue'); // 최대 데시벨 요소
     const warningElement = document.getElementById('warning');
     const timeElement = document.getElementById('time');
     const recordButton = document.getElementById('recordButton');
@@ -10,12 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let warningCount = 0;
     let cumulativeDbSum = 0;
     let dbCount = 0;
+    let maxDbValue = 0; // 최대 데시벨 변수
     let isRecording = false;
     let startTime, endTime;
 
     // 전체 기록을 위한 CSV 데이터 배열
     const csvData = [
-        ["측정 시작 시간", "측정 종료 시간", "평균 데시벨", "경고 횟수"]
+        ["측정 시작 시간", "측정 종료 시간", "평균 데시벨", "최대 데시벨", "경고 횟수"]
     ];
 
     // 경고음 로드
@@ -56,6 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const avgDbValue = Math.round(cumulativeDbSum / dbCount);
                 avgDbValueElement.innerText = avgDbValue;
 
+                // 최대 데시벨 업데이트
+                if (dbValue > maxDbValue) {
+                    maxDbValue = dbValue;
+                    maxDbValueElement.innerText = maxDbValue; // 최대 데시벨 표시
+                }
+
                 if (dbValue > 40) {
                     if (warningElement.style.display === 'none') {
                         warningCount++;
@@ -93,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 startTime.format(),
                 endTime.format(),
                 avgDbValue,
+                maxDbValue,  // 최대 데시벨 기록
                 warningCount
             ]);
 
@@ -100,7 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
             cumulativeDbSum = 0;
             dbCount = 0;
             warningCount = 0;
+            maxDbValue = 0; // 최대 데시벨 초기화
             avgDbValueElement.innerText = "0";  // 평균 데시벨 표시 초기화
+            maxDbValueElement.innerText = "0";  // 최대 데시벨 표시 초기화
             document.getElementById('warningCount').innerText = "경고 횟수: 0";  // 경고 횟수 표시 초기화
 
             // 버튼 및 아이콘 표시 업데이트
@@ -115,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cumulativeDbSum = 0;
             dbCount = 0;
             warningCount = 0;
+            maxDbValue = 0;
 
             // 버튼 및 아이콘 표시 업데이트
             recordButton.innerText = "기록 종료";
